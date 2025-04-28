@@ -1,0 +1,148 @@
+UTS Kecerdasan Buatan 2025
+Nama: Siti Rahmawati
+NIM: 2306146
+Kelas: B Teknik Informatika
+Kasus: Sistem Pakar Deteksi Hama Tanaman
+1. Kasus
+Seorang petani ingin sistem AI yang bisa membantu menentukan jenis hama tanaman berdasarkan gejala seperti:
+Daun menguning
+Terdapat bercak hitam
+Daun berlubang
+Tanaman layu
+
+2. Perancangan Aturan Logika
+Deklarasi Gejala:
+R1 = Daun menguning
+R2 = Terdapat bercak hitam
+R3 = Daun berlubang
+R4 = Tanaman layu
+
+Deklarasi Hama (Aksi/Aksi):
+A1 = Hama Wereng
+A2 = Jamur Daun
+A3 = Ulat Grayak
+A4 = Hama Aphid
+
+Aturan Logika (Rules):
+
+Jika R1 dan R4, maka A1 (Hama Wereng).
+R1∧R4→A1
+
+JikaR2 dan R1, maka A2 (Jamur Daun).
+R2∧R1→A2
+
+Jika R3 dan R2, maka A3 (Ulat Grayak).
+R3∧R2→A3
+
+Jika R1 dan R3, maka A4 (Hama Aphid).
+R1∧R3→A4
+
+Catatan: 
+Jamur Daun → gejalanya bercak hitam dan daun menguning.
+Wereng → daun menguning + tanaman layu.
+Ulat Grayak → daun berlubang + bercak hitam.
+Aphid → daun berlubang + daun menguning.
+
+3. Pseudocode
+Mulai
+  Tanyakan kepada pengguna gejala:
+    - Apakah daun menguning? (ya/tidak)
+    - Apakah terdapat bercak hitam? (ya/tidak)
+    - Apakah daun berlubang? (ya/tidak)
+    - Apakah tanaman layu? (ya/tidak)
+
+  Cek aturan:
+    Jika (R1 dan R4):
+      tampilkan "Jenis hama: A1 (Wereng)"
+    Jika (R2 dan R1):
+      tampilkan "Jenis hama: A2 (Jamur Daun)"
+    Jika (R3 dan R2):
+      tampilkan "Jenis hama: A3 (Ulat Grayak)"
+    Jika (R1 dan R3):
+      tampilkan "Jenis hama: A4 (Aphid)"
+  
+  Jika tidak ada kondisi yang terpenuhi:
+      tampilkan "Tidak dapat mengidentifikasi hama berdasarkan gejala yang diberikan."
+Selesai
+
+4. Python
+def sistem_pakar():
+    print("Jawab pertanyaan berikut dengan 'ya' atau 'tidak':")
+
+    R1 = input("Apakah daun menguning? ").lower() == 'ya'
+    R2 = input("Apakah terdapat bercak hitam? ").lower() == 'ya'
+    R3 = input("Apakah daun berlubang? ").lower() == 'ya'
+    R4 = input("Apakah tanaman layu? ").lower() == 'ya'
+
+    if R1 and R4:
+        print("Jenis hama terdeteksi: Wereng (A1)")
+    elif R2 and R1:
+        print("Jenis hama terdeteksi: Jamur Daun (A2)")
+    elif R3 and R2:
+        print("Jenis hama terdeteksi: Ulat Grayak (A3)")
+    elif R1 and R3:
+        print("Jenis hama terdeteksi: Aphid (A4)")
+    else:
+        print("Gejala tidak cocok dengan hama yang diketahui.")
+
+sistem_pakar()
+
+
+5. SWI-Prolog
+% Fakta Gejala
+% R1 - Daun menguning
+% R2 - Terdapat bercak hitam
+% R3 - Daun berlubang
+% R4 - Tanaman layu
+
+% Rules
+hama(A1) :- gejala(R1), gejala(R4).
+hama(A2) :- gejala(R2), gejala(R1).
+hama(A3) :- gejala(R3), gejala(R2).
+hama(A4) :- gejala(R1), gejala(R3).
+
+% Menampilkan hasil
+deskripsi(A1) :- write('Hama terdeteksi: Wereng').
+deskripsi(A2) :- write('Hama terdeteksi: Jamur Daun').
+deskripsi(A3) :- write('Hama terdeteksi: Ulat Grayak').
+deskripsi(A4) :- write('Hama terdeteksi: Aphid').
+
+% Program utama
+start :-
+    tanya_gejala,
+    (   hama(Hama) -> deskripsi(Hama)
+    ;   write('Tidak dapat mengidentifikasi hama berdasarkan gejala yang diberikan.')
+    ).
+
+% Tanya gejala
+tanya_gejala :-
+    tanya('Apakah daun menguning? (ya/tidak)', R1),
+    tanya('Apakah terdapat bercak hitam? (ya/tidak)', R2),
+    tanya('Apakah daun berlubang? (ya/tidak)', R3),
+    tanya('Apakah tanaman layu? (ya/tidak)', R4).
+
+% Menyimpan gejala
+tanya(Pertanyaan, Gejala) :-
+    write(Pertanyaan), nl,
+    read(Jawaban),
+    (   Jawaban == ya -> assert(gejala(Gejala))
+    ;   true).
+
+
+Cara menjalankan:
+
+Load file di SWI-Prolog:
+?- start.
+
+6. Penjelasan Alur Inferensi (Input → Output)
+Input: Pengguna menjawab pertanyaan gejala (ya/tidak) pada R1–R4.
+Proses Inferensi:
+Sistem mengecek kombinasi gejala (aturan R) terhadap basis aturan.
+Jika kombinasi cocok, sistem menghubungkannya ke aksi A.
+Output: Sistem menampilkan nama hama sesuai aturan A.
+Contoh Inferensi:
+Jika pengguna menjawab "ya" untuk R1 (daun menguning) dan R4 (tanaman layu), maka outputnya adalah A1 (Hama Wereng).
+
+
+
+
